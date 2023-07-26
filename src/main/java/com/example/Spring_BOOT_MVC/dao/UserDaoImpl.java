@@ -13,8 +13,11 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
-    @Autowired
     private EntityManager em;
+
+    public UserDaoImpl(EntityManager em) {
+        this.em = em;
+    }
 
     @Override
     public void add(User user) {
