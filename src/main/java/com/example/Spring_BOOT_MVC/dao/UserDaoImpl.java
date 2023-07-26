@@ -13,7 +13,7 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
     @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
     public UserDaoImpl(EntityManager em) {
         this.em = em;
