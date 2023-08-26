@@ -1,39 +1,33 @@
-package com.example.Spring_BOOT_MVC.controller;
+package ru.kata.spring.boot_security.demo.controller;
 
-import com.example.Spring_BOOT_MVC.model.User;
-import com.example.Spring_BOOT_MVC.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
-
-import java.util.List;
 
 @Controller
-public class UserController {
-    private final UserService userService;
+@RequestMapping("/admin")
+public class AdminController {
 
-    @Autowired
-    public UserController(UserService userService) {
+    private final UserService userService;
+    private final RoleService roleService;
+
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
-    @GetMapping(value = "/")
-    public String Users(ModelMap model) {
-
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
+    @GetMapping
+    public String showUsers(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
         return "users";
 
-    }
-
-    @GetMapping(value = "/{id}")
-    public String getUserByID(@PathVariable("id") Long id, Model model) {
-
-        model.addAttribute("user", userService.getUserById(id));
-        return "user";
     }
 
     @GetMapping(value = "/addUser")
@@ -41,13 +35,15 @@ public class UserController {
 
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.getRoles());
         return "addUser";
     }
 
     @PostMapping
     public String saveUser(@ModelAttribute("user") User user) {
         userService.add(user);
-        return "redirect:/";
+
+        return "redirect:/admin";
     }
 
     @GetMapping("/{id}/editUser")
@@ -56,10 +52,10 @@ public class UserController {
         return "editUser";
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         userService.updateUser(id, user);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @DeleteMapping("/{id}")
@@ -67,5 +63,4 @@ public class UserController {
         userService.deleteUser(id);
         return "redirect:/";
     }
-
 }

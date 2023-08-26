@@ -7,7 +7,7 @@
 <body>
 <br>
 
-<form th:method="post" th:action="@{/}" th:object="${user}">
+<form th:method="post" th:action="@{/admin}" th:object="${user}">
     <label fot="name">Enter name</label>
     <input type="text" th:field="*{name}" id="name">
     <br><br>
@@ -17,7 +17,21 @@
     <label fot="profession">Enter profession</label>
     <input type="text" th:field="*{profession}" id="profession">
     <br><br>
+    <label fot="password">Enter password</label>
+    <input type="text" th:field="*{password}" id="password">
+    <br><br>
+    <label>Role:
+        <select size="2" multiple name="roles" >
+            <option value="1">USER</option>
+            <option selected="selected" value="2">ADMIN</option>
+        </select>
+    </label>
+    <br><br>
     <input type="submit" value="Create"/>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
 
 </form>
 
