@@ -7,7 +7,7 @@
 <body>
 <br>
 
-<form th:method="PUT" th:action="@{/{id}(id=${user.getId()})}" th:object="${user}">
+<form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
     <label for="name">Enter name</label>
     <input type="text" th:field="*{name}" id="name">
     <br><br>
@@ -17,7 +17,22 @@
     <label for="profession">Enter profession</label>
     <input type="text" th:field="*{profession}" id="profession">
     <br><br>
+    <label for="password">Enter password</label>
+    <input type="text" th:field="*{password}" id="password">
+    <br><br>
+    <label>Role:
+        <select size="2" multiple name="roles" >
+            <option value="1">USER</option>
+            <option selected="selected" value="2">ADMIN</option>
+        </select>
+    </label>
+    <br><br>
+
     <input type="submit" value="OK"/>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
 
 </form>
 

@@ -8,5 +8,11 @@
 <p th:text="${user.getName()}">VALUE</p>
 <p th:text="${user.getAge()}">VALUE</p>
 <p th:text="${user.getProfession()}">VALUE</p>
+<p th:text="${user.getRoles()}">VALUE</p>
+
+
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>
